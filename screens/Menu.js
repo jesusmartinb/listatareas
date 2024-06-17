@@ -10,6 +10,9 @@ const Tab = createMaterialBottomTabNavigator();
 
 const Menu = () => {
 
+    const theme = useTheme();
+    theme.colors.secondaryContainer = "#e5e5e5"
+
     return (
         <Tab.Navigator
             initialRouteName="Tasks"
