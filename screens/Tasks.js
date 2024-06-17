@@ -1,8 +1,17 @@
-import { Text } from "react-native";
+import {Text, SafeAreaView, View, FlatList} from 'react-native';
+import TaskItem from '../components/TaskItem';
 
 const Tasks = () => {
     return (
-        <Text>Tasks</Text>
+        <SafeAreaView style={{marginHorizontal: 20}}>
+            <View>
+                <FlatList 
+                    data = { tasks }
+                    keyExtractor={(item) => item}
+                    renderItem={ ({item, index}) => <TaskItem task={item} index={index} /> }
+                />
+            </View>
+        </SafeAreaView>
     );
 };
 
