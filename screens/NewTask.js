@@ -1,26 +1,75 @@
 import React, { useState } from "react";
-import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
-const NewTask = () => {
+const NewTask = ({navigation}) => {
 
-    const [newTask, setNewTask] = useState("");
-    const [tasks, setTasks] = useState([]);
+    const baseUrl = 'http://localhost:3000/tasks';
 
-    const addTasks = () => {
-        // Añadir la tarea al arreglo de tareas
-        setTasks(currentTasks => [...currentTasks, newTask]);
-        // Limpiar el task
-        setNewTask("");
+    const [newTask, setNewTask] = useState({
+        title: "",
+        description: "",
+    });
+
+    const handleChangeText = (name, value) => {
+        setNewTask({ ...newTask, [name]: value });
+    }
+
+    const addTasks = async () => {
+        const sendData = {
+            title: newTask.title,
+            description: newTask.description,
+        }
+
+        await fetch(baseUrl + '/new-tasks', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(sendData),
+        })
+        .then((res) => res.json())
+        .catch((error) => {
+            Alert.alert('Error', 'No se pudo agregar la tarea. Inténtalo más tarde');
+        })
+        .them((response) =>{
+            if(response.message === 'error'){
+                Alert.alert('Error', 'Inténtalo más tarde');
+            } else {
+                navigation.navigate("Tareas", {state: true});
+            }
+        })
+
+        setNewTask({
+            title: '',
+            description: '',
+        });
     }
 
     return (
         <SafeAreaView style={{marginHorizontal: 20}}>
             <View>
+                <View>
+                    <Text style={ styles.title}>
+                        Crea Una Nueva Tarea
+                    </Text>
+                </View>
+            </View>
+            <View>
                 <TextInput
-                    onChangeText={ setNewTask }
-                    placeholder="Agregar nueva tarea..."
+                    onChangeText={ (value) => handleChangeText("title", value) }
+                    placeholder="Agregar nombre de la tarea..."
                     style={ styles.input }
-                    value={newTask}
+                    value={newTask.title}
+                 />
+            </View>
+            <View>
+                <TextInput
+                    onChangeText={ (value) => handleChangeText("description", value) }
+                    placeholder="Descrpción de la tarea..."
+                    multiline={true}
+                    numberOfLines={10}
+                    style={ styles.textArea }
+                    value={newTask.description}
                  />
             </View>
             <View>
@@ -33,18 +82,17 @@ const NewTask = () => {
                     </Text>
                 </TouchableOpacity>
             </View>
-            {/* <View>
-                <TouchableOpacity>
-                    <Text style={ [styles.buttom, styles.cancelButtom] }>
-                        Cancelar
-                    </Text>
-                </TouchableOpacity>
-            </View> */}
         </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
+
+    title: {
+        fontSize: 30, 
+        textAlign: 'center', 
+        margin: 10
+    },
 
     input: {
         height: 60,
@@ -55,6 +103,17 @@ const styles = StyleSheet.create({
         fontSize: 20,
         backgroundColor: '#fbfbfb',
         borderRadius: 10
+    },
+    
+    textArea: {
+        borderColor: 'gray',
+        borderWidth: 1,
+        margin: 10,
+        padding: 20,
+        fontSize: 20,
+        backgroundColor: '#fbfbfb',
+        borderRadius: 10,
+        textAlignVertical: 'top'
     },
 
     buttom: {
@@ -70,9 +129,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#3498db',
     },
 
-    cancelButtom: {
-        backgroundColor: '#e74c3c',
-    }
 });
 
 export default NewTask;
