@@ -5,8 +5,10 @@ const TaskItem = ({ onPress, task }) => {
     <View style={
       styles.container
     } >
+      <Text>{task}</Text>
       <TouchableOpacity style={styles.button} onPress = { onPress }>
-        <Text>{task}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress = { onPress }>
       </TouchableOpacity>
     </View>
   )

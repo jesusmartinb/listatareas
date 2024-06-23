@@ -1,49 +1,29 @@
 import React, { useState } from "react";
-import { Alert, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import CheckBox from "react-native-check-box";
+import { useDispatch } from "react-redux";
+import { create } from "../features/tareas/tareasSlice";
 
 const NewTask = ({navigation}) => {
 
-    const baseUrl = 'http://localhost:3000/tasks';
 
     const [newTask, setNewTask] = useState({
         title: "",
         description: "",
     });
 
+    const dispatch = useDispatch();
+
     const handleChangeText = (name, value) => {
         setNewTask({ ...newTask, [name]: value });
-    }
+    };
 
-    const addTasks = async () => {
-        const sendData = {
-            title: newTask.title,
-            description: newTask.description,
-        }
-
-        await fetch(baseUrl + '/new-tasks', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(sendData),
-        })
-        .then((res) => res.json())
-        .catch((error) => {
-            Alert.alert('Error', 'No se pudo agregar la tarea. Inténtalo más tarde');
-        })
-        .them((response) =>{
-            if(response.message === 'error'){
-                Alert.alert('Error', 'Inténtalo más tarde');
-            } else {
-                navigation.navigate("Tareas", {state: true});
-            }
-        })
-
-        setNewTask({
-            title: '',
-            description: '',
-        });
-    }
+    const addTasks = () => {
+        if (!newTask) return;
+        dispatch(create(newTask));
+        setNewTask({ title: "", description: "", done: false });
+        navigation.navigate("Tareas");
+    };
 
     return (
         <SafeAreaView style={{marginHorizontal: 20}}>
@@ -67,7 +47,7 @@ const NewTask = ({navigation}) => {
                     onChangeText={ (value) => handleChangeText("description", value) }
                     placeholder="Descrpción de la tarea..."
                     multiline={true}
-                    numberOfLines={10}
+                    numberOfLines={8}
                     style={ styles.textArea }
                     value={newTask.description}
                  />
@@ -127,6 +107,24 @@ const styles = StyleSheet.create({
 
     acceptButton: {
         backgroundColor: '#3498db',
+    },
+
+    checkbox: {
+        width: 20,
+        height: 20,
+        borderRadius: 4,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        marginRight: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    checked: {
+        width: 12,
+        height: 12,
+        borderRadius: 2,
+        backgroundColor: '#333',
     },
 
 });
