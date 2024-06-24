@@ -1,6 +1,5 @@
-import {Text, SafeAreaView, View, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
-import TaskItem from '../components/TaskItem';
-import React, { useState } from 'react'
+import {Text, SafeAreaView, View, FlatList, StyleSheet, Pressable} from 'react-native';
+import React from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import { toggleComplete, deleteTask } from '../features/tareas/tareasSlice';
 
@@ -30,12 +29,12 @@ const Tasks = () => {
                         <View style={styles.container}>
                             <Text style={{ textDecorationLine: item.done ? "line-through" : "", texDecorationColor: item.done ? "#f80000" : "", color: item.done ? "#f80000" : "#000000", fontSize: 25}}>{item.title}</Text>
                             <Text style={styles.text}>{item.description}</Text>
-                            <TouchableOpacity onPress = { () => handleComplete(index) }>
+                            <Pressable onPress = { () => handleComplete(index) }>
                                 <Text style={styles.button}>Completar</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress = { () => handleDelete(index) }>
+                            </Pressable>
+                            <Pressable onPress = { () => handleDelete(index) }>
                                 <Text style={styles.button}>Eliminar</Text>
-                            </TouchableOpacity>
+                            </Pressable>
                         </View>
                     }
                 />
@@ -54,7 +53,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     marginHorizontal: 16,
     borderRadius: 10,
-    backgroundColor: '#f9c2ff',
+    backgroundColor: '#d1e7dd',
   },
 
   text: {

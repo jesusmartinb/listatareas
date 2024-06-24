@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { SafeAreaView, StyleSheet, Text, TextInput, Pressable, View } from "react-native";
 import CheckBox from "react-native-check-box";
 import { useDispatch } from "react-redux";
 import { create } from "../features/tareas/tareasSlice";
@@ -53,14 +53,14 @@ const NewTask = ({navigation}) => {
                  />
             </View>
             <View>
-                <TouchableOpacity>
+                <Pressable>
                     <Text
                         style={ [styles.buttom, styles.acceptButton] }
                         onPress={ addTasks }
                     >
                         Agregar tarea
                     </Text>
-                </TouchableOpacity>
+                </Pressable>
             </View>
         </SafeAreaView>
     );
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         backgroundColor: '#fbfbfb',
         borderRadius: 10,
-        textAlignVertical: 'top'
+        verticalAlign: 'top'
     },
 
     buttom: {
