@@ -1,4 +1,4 @@
-import {Text, SafeAreaView, View, FlatList, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
+import {Text, SafeAreaView, View, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
 import TaskItem from '../components/TaskItem';
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from "react-redux";
@@ -27,14 +27,14 @@ const Tasks = () => {
                     data = { tasks }
                     keyExtractor={ (item, index) => index}
                     renderItem={ ({item, index}) => 
-                        <View>
-                            <Text style={{ textDecoration: item.done ? "line-through" : "" }}>{item.title}</Text>
-                            <Text>{item.description}</Text>
-                            <TouchableOpacity style={styles.button} onPress = { () => handleComplete(index) }>
-                                <Text>Completar</Text>
+                        <View style={styles.container}>
+                            <Text style={{ textDecorationLine: item.done ? "line-through" : "", texDecorationColor: item.done ? "#f80000" : "", color: item.done ? "#f80000" : "#000000", fontSize: 25}}>{item.title}</Text>
+                            <Text style={styles.text}>{item.description}</Text>
+                            <TouchableOpacity onPress = { () => handleComplete(index) }>
+                                <Text style={styles.button}>Completar</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.button} onPress = { () => handleDelete(index) }>
-                                <Text>Eliminar</Text>
+                            <TouchableOpacity onPress = { () => handleDelete(index) }>
+                                <Text style={styles.button}>Eliminar</Text>
                             </TouchableOpacity>
                         </View>
                     }
@@ -46,7 +46,8 @@ const Tasks = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
+    display: 'flex',
+    flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 20,
@@ -56,10 +57,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#f9c2ff',
   },
 
+  text: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    padding: 10,
+  },
+
   button: {
-    flex: 1,
+    display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 15,
+    fontSize: 20,
+    borderRadius: 10,
+    backgroundColor: '#f80000',
+    margin: 3,
+    color: 'white',
   },
 });
 
