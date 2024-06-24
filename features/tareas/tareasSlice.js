@@ -4,15 +4,18 @@ const initialState = {
     value: [
         {
             title: 'Tarea 1',
-            description: 'Descripcion de la tarea 1',
+            description: 'Descripción de la tarea 1',
+            done: false
         },
         {
             title: 'Tarea 2',
-            description: 'Descripcion de la tarea 2',
+            description: 'Descripción de la tarea 2',
+            done: false
         },
         {
             title: 'Tarea 3',
-            description: 'Descripcion de la tarea 3',
+            description: 'Descripción de la tarea 3',
+            done: false
         },
     ],
 }

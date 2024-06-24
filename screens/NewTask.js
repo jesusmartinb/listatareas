@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { SafeAreaView, StyleSheet, Text, TextInput, Pressable, View } from "react-native";
-import CheckBox from "react-native-check-box";
 import { useDispatch } from "react-redux";
 import { create } from "../features/tareas/tareasSlice";
 
@@ -45,9 +44,9 @@ const NewTask = ({navigation}) => {
             <View>
                 <TextInput
                     onChangeText={ (value) => handleChangeText("description", value) }
-                    placeholder="Descrpción de la tarea..."
+                    placeholder="Descripción de la tarea..."
                     multiline={true}
-                    numberOfLines={8}
+                    rows={8}
                     style={ styles.textArea }
                     value={newTask.description}
                  />
