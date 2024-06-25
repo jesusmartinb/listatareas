@@ -1,26 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = {
-    value: [
-        {
-            title: 'Tarea 1',
-            description: 'Descripción de la tarea 1',
-            done: false
-        },
-        {
-            title: 'Tarea 2',
-            description: 'Descripción de la tarea 2',
-            done: false
-        },
-        {
-            title: 'Tarea 3',
-            description: 'Descripción de la tarea 3',
-            done: false
-        },
-    ],
-}
+const initialState = { value: [{
+    title: 'Tarea de Ejemplo',
+    description: 'Descripción de la tarea de ejemplo',
+    done: false
+}] };
 
-const tareasSlice = createSlice({
+
+export const tareasSlice = createSlice({
     name: 'tasks',
     initialState,
     reducers: {
@@ -47,3 +34,4 @@ const tareasSlice = createSlice({
 export const { create, toggleComplete, deleteTask } = tareasSlice.actions
 
 export default tareasSlice.reducer
+export const selectTasks = state => state.tasksState.value;

@@ -1,13 +1,14 @@
 import {Text, SafeAreaView, View, FlatList, StyleSheet, Pressable} from 'react-native';
 import React from 'react'
 import { useSelector, useDispatch } from "react-redux";
+import { selectTasks } from '../features/tareas/tareasSlice';
 import { toggleComplete, deleteTask } from '../features/tareas/tareasSlice';
 
 const Tasks = () => {
 
-    const tasks = useSelector((state) => state.tasks.value);
+    const tasks = useSelector(selectTasks);
 
-    console.log(tasks);
+    // console.log(tasks);
 
     const dispatch = useDispatch();
 
