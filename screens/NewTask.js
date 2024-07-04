@@ -108,24 +108,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#3498db',
     },
 
-    checkbox: {
-        width: 20,
-        height: 20,
-        borderRadius: 4,
-        borderWidth: 1,
-        borderColor: '#ccc',
-        marginRight: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-
-    checked: {
-        width: 12,
-        height: 12,
-        borderRadius: 2,
-        backgroundColor: '#333',
-    },
-
 });
 
 export default NewTask;
