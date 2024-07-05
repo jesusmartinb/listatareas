@@ -1,4 +1,4 @@
-import {Text, SafeAreaView, View, FlatList, StyleSheet, Pressable, Alert, Modal} from 'react-native';
+import {Text, SafeAreaView, View, FlatList, StyleSheet, Pressable, Alert, Modal, StatusBar} from 'react-native';
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import { selectTasks, toggleComplete, deleteTask } from '../features/tareas/tareasSlice';
@@ -29,25 +29,23 @@ const Tasks = () => {
     };
 
     return (
-        <SafeAreaView style={{marginHorizontal: 20}}>
-            <View>
-                <FlatList 
-                    data = { tasks }
-                    keyExtractor={ (item, index) => index}
-                    renderItem={ ({item, index}) => 
-                        <View style={styles.container}>
-                            <Text style={{ textDecorationLine: item.done ? "line-through" : "", texDecorationColor: item.done ? "#f80000" : "", color: item.done ? "#f80000" : "#000000", fontSize: 25}}>{item.title}</Text>
-                            <Text style={styles.text}>{item.description}</Text>
-                            <Pressable onPress = { () => handleComplete(index) }>
-                                <Text style={styles.button}>{item.done ? "No Completada" : "Completada"}</Text>
-                            </Pressable>
-                            <Pressable onPress = { () => handleDelete(index) }>
-                                <Text style={styles.button}>Eliminar</Text>
-                            </Pressable>
-                        </View>
-                    }
-                />
-            </View>
+        <SafeAreaView style={[{marginHorizontal: 20}, styles.containerPrincipal]}>
+            <FlatList 
+                data = { tasks }
+                keyExtractor={ (item, index) => index}
+                renderItem={ ({item, index}) => 
+                    <View style={styles.container}>
+                        <Text style={{ textDecorationLine: item.done ? "line-through" : "", texDecorationColor: item.done ? "#f80000" : "", color: item.done ? "#f80000" : "#000000", fontSize: 25}}>{item.title}</Text>
+                        <Text style={styles.text}>{item.description}</Text>
+                        <Pressable onPress = { () => handleComplete(index) }>
+                            <Text style={styles.button}>{item.done ? "No Completada" : "Completada"}</Text>
+                        </Pressable>
+                        <Pressable onPress = { () => handleDelete(index) }>
+                            <Text style={styles.button}>Eliminar</Text>
+                        </Pressable>
+                    </View>
+                }
+            />
             <View style={styles.centeredView}>
                 <Modal
                     animationType="slide"
@@ -79,6 +77,11 @@ const Tasks = () => {
 };
 
 const styles = StyleSheet.create({
+  containerPrincipal: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight || 0,
+  },
+
   container: {
     display: 'flex',
     flexDirection: 'column',
